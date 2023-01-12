@@ -66,7 +66,7 @@ function mainMenu(person, people) {
         case "info":
             //! TODO #1: Utilize the displayPerson function //////////////////////////////////////////
             // HINT: Look for a person-object stringifier utility function to help
-            let personInfo = displayPerson(person[0],);
+            let personInfo = displayPerson(person[0]);
             alert(personInfo);
             break;
         case "family":
@@ -191,3 +191,26 @@ function chars(input) {
 //////////////////////////////////////////* End Of Starter Code *//////////////////////////////////////////
 // Any additional functions can be written below this line 👇. Happy Coding! 😁
 
+//Find Parents
+function findParents(person, people){ //function with 2 contraints to look for a person in the people array
+    let parentsArray = [];            //variable to have an open array to include the persons parents
+    if (!person.parents){             //if person does not have parents in array return null
+        return null;
+    }
+    for (let key in person.parents){  //open loop to iterate each object and select the persons parents
+        let parentID = person.parents[key]; //varible to idendify the key (ID) of the parent of the child
+        let parentObject = people.filter(function(person){ //filter will collect the parents of the child and place into an array as an object
+            if (person.parents === parentID){
+                return true;
+            }
+        })
+        parentsArray.push(parentObject)
+    }
+}
+
+//Find Family
+function findPersonFamily(person,people){
+    let familyArray = [];
+    //Find parents
+    familyArray += `Parents: ${findParents(person,people)}`;
+}
