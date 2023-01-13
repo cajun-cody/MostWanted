@@ -203,6 +203,64 @@ function findSpouse(person, people){
     })
     return spouseName;
 }
+//Find Siblings
+function findSiblings(person, people){
+    let siblingsArray = [];
+    let parentsArray = person.parents;
+    for (let i = 0; i < parentsArray.length; i++){
+        siblingsArray = people.filter(function(person){
+            if (person.parents[i] === parentsArray[i]){
+                return true;    
+            }
+        });
+    }
+    return siblingsArray;
+}
+
+/* function findSiblings(person, people){
+    if (person.length !== people.length){
+        return false;
+    }
+    else {
+        for (let i = 0; i < person.length; i++){
+            if (person[i] !== people[i]){
+                return false;
+            }
+            else {
+                continue
+            }
+        }
+    }
+    return true;
+} */
+
+/* function findSiblings(person,people){
+    let parentsArray = people.filter(person => person.parents === " ");
+    let siblingsArray = people.filter(person => person.parents === parentsArray);
+    return siblingsArray;        
+} */
+
+/* function findSiblings (person, people){
+    let siblingsArray = [];
+    siblingsArray = people.filter(function(el){ return person.parents.includes(el.id) });
+    if (el.id === people.parents){
+        return siblingsArray;
+    }
+} */
+
+/* function findSiblings(person, people){
+    let parentIds = person.parents;
+    let siblingArray = people.filter(function(el){  //filters a group of parents into an array
+        if (el.parents === parentIds){
+            return true;
+        }
+    })
+    let siblingName = [];   //filters throught the parents array and returns parents that are the same
+    for (let el in siblingArray){
+        if (el.parents === people.parents)
+        return siblingName;
+    }
+} */
 
 
 
@@ -212,9 +270,9 @@ function findPersonFamily(person,people){
     // Find Spouse
     familyArray += `Spouse: ${displayPeople(findSpouse(person,people))}\n`;
     // Find Parents
-    familyArray += `Parents: ${displayPeople(findParents(person,people))}\n`;
+    familyArray += `Parent1: ${displayPeople(findParents(person,people))}\n`;
     // Find Siblings
-    //familyArray += `Siblings: ${displayPeople(findSiblings(person,people))}`;
+    familyArray += `Siblings: ${displayPeople(findSiblings(person,people))}\n`;
     return familyArray;
 }
 
