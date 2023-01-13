@@ -122,13 +122,10 @@ function searchByName(people) {
  * @param {Array} people        A collection of person objects.
  */
 function displayPeople(people) {
-    alert(
-        people
-            .map(function (person) {
-                return `${person.firstName} ${person.lastName}`;
-            })
-            .join("\n")
-    );
+    return people
+        .map(function (person) {return `${person.firstName} ${person.lastName}`;})
+        .join("\n")
+    ;
 }
 // End of displayPeople()
 
@@ -194,23 +191,36 @@ function chars(input) {
 //Find Parents
 function findParents(person, people){ //function with 2 contraints to look for a person in the people array
     let parentsArray = [];            //variable to have an open array to include the persons parents
-    if (!person.parents){             //if person does not have parents in array return null
-        return null;
-    }
-    for (let key in person.parents){  //open loop to iterate each object and select the persons parents
-        let parentID = person.parents[key]; //varible to idendify the key (ID) of the parent of the child
-        let parentObject = people.filter(function(person){ //filter will collect the parents of the child and place into an array as an object
-            if (person.parents === parentID){
-                return true;
-            }
-        })
-        parentsArray.push(parentObject)
-    }
+    parentsArray = people.filter(function(el){ return person.parents.includes(el.id) }); //simple filter that looks in the people array and filters each element and returns the element included in the person array.
+    return parentsArray;
 }
+ //Find Spouse
+function findSpouse(person, people){
+    let spouseName = people.filter(function(el){
+        if (el.id === person.currentSpouse){
+            return true;
+        }
+    })
+    return spouseName;
+}
+
+
 
 //Find Family
 function findPersonFamily(person,people){
     let familyArray = [];
-    //Find parents
-    familyArray += `Parents: ${findParents(person,people)}`;
+    // Find Spouse
+    familyArray += `Spouse: ${displayPeople(findSpouse(person,people))}\n`;
+    // Find Parents
+    familyArray += `Parents: ${displayPeople(findParents(person,people))}\n`;
+    // Find Siblings
+    //familyArray += `Siblings: ${displayPeople(findSiblings(person,people))}`;
+    return familyArray;
 }
+
+// Simple filters:
+// let array1=[6];
+// let array2 = [3]
+// array1.filter(function(el) { return condition } )
+
+
