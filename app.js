@@ -88,6 +88,9 @@ function mainMenu(person, people) {
         case "quit":
             // Stop application execution
             return;
+        case "searchByTraits":
+            // Search by single or multiple traits (Choose 1 or 2)
+            break;
         default:
             // Prompt user again. Another instance of recursion
             return mainMenu(person, people);
@@ -256,10 +259,27 @@ function findPersonDescendants(person,people){
 }
 
 /**
- * This function is used to search people 
+ * This function is used allow the user to choose 
+ * to search people by a single or multiple traits.
+ * @param {Array} people
+ * @returns {Array}
  */
-
-
+function searchBySingleOrMultipleTraits(people)
+let userInput = promptFor("Do you want to search by single or multiple traits? Press 1 for single or 2 for multiple: ");
+switch (userInput){
+    case "1":
+        results = searchByTrait(people);
+        break;
+    case "2":
+        results = searchByMultipleTraits(people);
+        displayPeople(results);
+        while(results.length > 1){
+            alert("Pick another trait to narrow your search: \ngender\ndob\nheight\nweight\neyeColor\noccupation");
+            results= searchByMultipleTraits(results);
+            displayPeople(results);
+        }
+        break;
+}
 
 
 
