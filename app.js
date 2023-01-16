@@ -216,25 +216,6 @@ function findSiblings(person, people){
     }
     return siblingsArray;
 }
-//Find Decendants
-//Using recursion to find relatives within relatives.
-function findPersonDescendants(person, people, decendantsFound = []){   
-    let childArray = people.filter(function(el){    //Make subarray with persons children
-        if (el.parents.includes(person.id)){    //Filter/function to pull id's of parents
-            return true;
-        }
-    })
-    decendantsFound = [person];    //Open array based on person 
-    if(childArray.length === 0){      //Base Case - Terminating condition (end of branch)
-        return decendantsFound;
-    }
-    for (let i = 0; i < childArray.length; i++){
-        //Recursion loop will loop through people over and over to find any parents of a person
-        decendantsFound = decendantsFound.concat(findPersonDescendants(childArray[i], people));
-    }
-    return decendantsFound;
-    
-}
 
 //Find Family
 function findPersonFamily(person,people){
@@ -248,9 +229,37 @@ function findPersonFamily(person,people){
     return familyArray;
 }
 
-// Simple filters:
-// let array1=[6];
-// let array2 = [3]
-// array1.filter(function(el) { return condition } )
+//Find Decendants
+//Using recursion to find relatives within relatives.
+function foundPersonDescendants(person, people, decendantsFound = []){   
+    let childArray = people.filter(function(el){    //Make subarray with persons children
+        if (el.parents.includes(person.id)){    //Filter/function to pull id's of parents
+            return true;
+        }
+    })
+    decendantsFound = [person];    //Open array based on person 
+    if(childArray.length === 0){      //Base Case - Terminating condition (end of branch)
+        return decendantsFound;
+    }
+    for (let i = 0; i < childArray.length; i++){
+        //Recursion loop will loop through people over and over to find any parents of a person
+        decendantsFound = decendantsFound.concat(foundPersonDescendants(childArray[i], people));
+    }
+    return decendantsFound;
+    
+}
+//Function to stringify found dependants
+function findPersonDescendants(person,people){
+    let descendantArray =[];
+    descendantArray += `Descendants:--- \n${displayPeople(foundPersonDescendants(person,people))}\n`;
+    return descendantArray;
+}
+
+/**
+ * This function is used to search people 
+ */
+
+
+
 
 
