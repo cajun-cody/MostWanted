@@ -205,10 +205,10 @@ function findSpouse(person, people){
 }
 //Find Siblings
 function findSiblings(person, people){
-    let siblingsArray = [];
-    let parentsArray = person.parents;
-    for (let i = 0; i < parentsArray.length; i++){
-        siblingsArray = people.filter(function(person){
+    let siblingsArray = [];                                //Open array to hold all siblings with the same parent.
+    let parentsArray = person.parents;                      //variable to hold all parents of children
+    for (let i = 0; i < parentsArray.length; i++){          //Loop to iterate over each person to gather the list of all the parents
+        siblingsArray = people.filter(function(person){     //Redfine variable and add a filter and an if statment to collect only equal parents
             if (person.parents[i] === parentsArray[i]){
                 return true;    
             }
@@ -216,63 +216,35 @@ function findSiblings(person, people){
     }
     return siblingsArray;
 }
-
-/* function findSiblings(person, people){
-    if (person.length !== people.length){
-        return false;
-    }
-    else {
-        for (let i = 0; i < person.length; i++){
-            if (person[i] !== people[i]){
-                return false;
-            }
-            else {
-                continue
-            }
-        }
-    }
-    return true;
-} */
-
-/* function findSiblings(person,people){
-    let parentsArray = people.filter(person => person.parents === " ");
-    let siblingsArray = people.filter(person => person.parents === parentsArray);
-    return siblingsArray;        
-} */
-
-/* function findSiblings (person, people){
-    let siblingsArray = [];
-    siblingsArray = people.filter(function(el){ return person.parents.includes(el.id) });
-    if (el.id === people.parents){
-        return siblingsArray;
-    }
-} */
-
-/* function findSiblings(person, people){
-    let parentIds = person.parents;
-    let siblingArray = people.filter(function(el){  //filters a group of parents into an array
-        if (el.parents === parentIds){
+//Find Decendants
+//Using recursion to find relatives within relatives.
+function findPersonDescendants(person, people, decendantsFound = []){   
+    let childArray = people.filter(function(el){    //Make subarray with persons children
+        if (el.parents.includes(person.id)){    //Filter/function to pull id's of parents
             return true;
         }
     })
-    let siblingName = [];   //filters throught the parents array and returns parents that are the same
-    for (let el in siblingArray){
-        if (el.parents === people.parents)
-        return siblingName;
+    decendantsFound = [person];    //Open array based on person 
+    if(childArray.length === 0){      //Base Case - Terminating condition (end of branch)
+        return decendantsFound;
     }
-} */
-
-
+    for (let i = 0; i < childArray.length; i++){
+        //Recursion loop will loop through people over and over to find any parents of a person
+        decendantsFound = decendantsFound.concat(findPersonDescendants(childArray[i], people));
+    }
+    return decendantsFound;
+    
+}
 
 //Find Family
 function findPersonFamily(person,people){
     let familyArray = [];
     // Find Spouse
-    familyArray += `Spouse: ${displayPeople(findSpouse(person,people))}\n`;
+    familyArray += `Spouse:--- \n${displayPeople(findSpouse(person,people))}\n`;
     // Find Parents
-    familyArray += `Parent1: ${displayPeople(findParents(person,people))}\n`;
+    familyArray += `Parent1:--- \n${displayPeople(findParents(person,people))}\n`;
     // Find Siblings
-    familyArray += `Siblings: ${displayPeople(findSiblings(person,people))}\n`;
+    familyArray += `Siblings:--- \n${displayPeople(findSiblings(person,people))}\n`;
     return familyArray;
 }
 
