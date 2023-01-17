@@ -31,7 +31,7 @@ function app(people) {
         case "no":
             //! TODO #4: Declare a searchByTraits (multiple traits) function //////////////////////////////////////////
                 //! TODO #4a: Provide option to search for single or multiple //////////////////////////////////////////
-            searchResults = searchByTraits(people);
+            searchResults = searchBySingleOrMultipleTraits(people);
             break;
         default:
             // Re-initializes the app() if neither case was hit above. This is an instance of recursion.
@@ -88,8 +88,10 @@ function mainMenu(person, people) {
         case "quit":
             // Stop application execution
             return;
-        case "searchByTraits":
+        case "traits":
             // Search by single or multiple traits (Choose 1 or 2)
+            let personTraits = searchBySingleOrMultipleTraits(people);
+            alert(personTraits);
             break;
         default:
             // Prompt user again. Another instance of recursion
@@ -264,22 +266,42 @@ function findPersonDescendants(person,people){
  * @param {Array} people
  * @returns {Array}
  */
-function searchBySingleOrMultipleTraits(people)
-let userInput = promptFor("Do you want to search by single or multiple traits? Press 1 for single or 2 for multiple: ");
-switch (userInput){
-    case "1":
-        results = searchByTrait(people);
-        break;
-    case "2":
-        results = searchByMultipleTraits(people);
-        displayPeople(results);
-        while(results.length > 1){
-            alert("Pick another trait to narrow your search: \ngender\ndob\nheight\nweight\neyeColor\noccupation");
-            results= searchByMultipleTraits(results);
+function searchBySingleOrMultipleTraits(people){
+    let userInput = promptFor("Do you want to search by single or multiple traits? Press 1 for single or 2 for multiple: ");
+    switch (userInput){   
+        case "1":
+            results = searchByTrait(people);
+            break;
+        case "2":
+            results = searchByMultipleTraits(people);
             displayPeople(results);
-        }
-        break;
+            while(results.length > 1){
+                alert("Pick another trait to narrow your search: \ngender\ndob\nheight\nweight\neyeColor\noccupation");
+                results= searchByMultipleTraits(results);
+                displayPeople(results);
+            }
+            break;
+        default:
+            searchBySingleOrMultipleTraits();
+            break;
+    }
+        
 }
-
-
+/**
+ * This function works with the same parameters as above. 
+ * It will allow users to search using a single trait. 
+ * 
+*/
+function searchByTrait(people){
+    let userInputTrait = promptFor("Please enter what specific trait you would like to search by: \ngender\ndob\nheight\nweight\neyeColor\noccupation");
+    let userInputValue = promptFor("Please enter the value of the trait you would like to seach for. ");
+    let results = people.filter(
+        function(person){
+            if(person[userInputTrait] === userInputValue){
+               return true; 
+            }
+        }
+    );
+    return results;
+}
 
