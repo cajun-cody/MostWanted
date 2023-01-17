@@ -265,10 +265,11 @@ function searchBySingleOrMultipleTraits(people){
     let userInput = promptFor("Do you want to search by single or multiple traits? Press 1 for single or 2 for multiple.", chars);
     switch (userInput){   
         case "1":
-            results = searchByTrait(people);
+            let personTrait = findPersonByTrait(people);
+            alert(personTrait);
             break;
         case "2":
-            results = searchByMultipleTraits(people);
+            let personTraits = findPersonByMultipleTraits(people);
             displayPeople(results);
             while(results.length > 1){  //Loop to iterate until the search only yields 1 person
                 alert("Pick another trait to narrow your search: \ngender\ndob\nheight\nweight\neyeColor\noccupation", chars); //Narrow the search
@@ -288,15 +289,42 @@ function searchBySingleOrMultipleTraits(people){
  * 
 */
 function searchByTrait(people){
-    let userInputTrait = promptFor("Please enter what specific trait you would like to search by: \ngender\ndob\nheight\nweight\neyeColor\noccupation");
-    let userInputValue = promptFor("Please enter the value of the trait you would like to seach for. ");
+    let userInputTrait = promptFor("Please enter what specific trait you would like to search by: \ngender\ndob\nheight\nweight\neyeColor\noccupation", chars);
+    let userInputValue = promptFor("Please enter the value of the trait you would like to seach for.", chars);
     let results = people.filter(
         function(person){
-            if(person[userInputTrait] === userInputValue || +userInputValue === person[userInputTrait]){
+            if(person[userInputTrait] === userInputValue || userInputValue === person[userInputTrait]){
                return true; 
             }
         }
     );
     return results;
+}
+/**
+ * Function to stringify person/persons found by trait.
+ */
+function findPersonByTrait(people){
+    let personTraitArray =[];
+    personTraitArray += `Person By Trait:--- \n${displayPeople(searchByTrait(people))}\n`;
+    return personTraitArray;
+}
+
+function searchByMultipleTraits(people){
+
+}
+
+
+
+
+
+
+
+/**
+ * Function to stringify person found by multiple traits.
+ */
+function findPersonByMultipleTraits(people){
+    let personTraitsArray =[];
+    personTraitsArray += `Person By Multiple Traits:--- \n${displayPeople(searchByMultipleTraits(people))}\n`;
+    return personTraitsArray;
 }
 
