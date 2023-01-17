@@ -88,11 +88,6 @@ function mainMenu(person, people) {
         case "quit":
             // Stop application execution
             return;
-        case "traits":
-            // Search by single or multiple traits (Choose 1 or 2)
-            let personTraits = searchBySingleOrMultipleTraits(people);
-            alert(personTraits);
-            break;
         default:
             // Prompt user again. Another instance of recursion
             return mainMenu(person, people);
@@ -267,7 +262,7 @@ function findPersonDescendants(person,people){
  * @returns {Array}
  */
 function searchBySingleOrMultipleTraits(people){
-    let userInput = promptFor("Do you want to search by single or multiple traits? Press 1 for single or 2 for multiple: ");
+    let userInput = promptFor("Do you want to search by single or multiple traits? Press 1 for single or 2 for multiple.", chars);
     switch (userInput){   
         case "1":
             results = searchByTrait(people);
@@ -275,9 +270,9 @@ function searchBySingleOrMultipleTraits(people){
         case "2":
             results = searchByMultipleTraits(people);
             displayPeople(results);
-            while(results.length > 1){
-                alert("Pick another trait to narrow your search: \ngender\ndob\nheight\nweight\neyeColor\noccupation");
-                results= searchByMultipleTraits(results);
+            while(results.length > 1){  //Loop to iterate until the search only yields 1 person
+                alert("Pick another trait to narrow your search: \ngender\ndob\nheight\nweight\neyeColor\noccupation", chars); //Narrow the search
+                results = searchByMultipleTraits(results);
                 displayPeople(results);
             }
             break;
@@ -297,7 +292,7 @@ function searchByTrait(people){
     let userInputValue = promptFor("Please enter the value of the trait you would like to seach for. ");
     let results = people.filter(
         function(person){
-            if(person[userInputTrait] === userInputValue){
+            if(person[userInputTrait] === userInputValue || +userInputValue === person[userInputTrait]){
                return true; 
             }
         }
