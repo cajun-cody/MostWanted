@@ -282,14 +282,14 @@ function searchBySingleOrMultipleTraits(people){
 /**
  * This function works with the same parameters as above. 
  * It will allow users to search using a single trait. 
- * 
+ * Filter will have an or statement to handle integer inputs.
 */
 function searchByTrait(people){
     let userInputTrait = promptFor("Please enter what specific trait you would like to search by: \ngender\ndob\nheight\nweight\neyeColor\noccupation", chars);
     let userInputValue = promptFor("Please enter the value of the trait you would like to seach for.", chars);
     let results = people.filter(
         function(person){
-            if(person[userInputTrait] === userInputValue || userInputValue === person[userInputTrait]){
+            if(person[userInputTrait] === userInputValue || parseInt(userInputValue) === person[userInputTrait]){
                return true; 
             }
         }
@@ -304,9 +304,11 @@ function findPersonByTrait(people){
     personTraitArray += `Person By Trait:--- \n${displayPeople(searchByTrait(people))}\n`;
     return personTraitArray;
 }
-//Function to search by multiple traits.
-//While loop will iterate by narrowing each searched by trait to a smaller array.
-//Loop will terminate and return results when the length condition is met. 
+/**Function to search by multiple traits.
+*While loop will iterate by narrowing each searched by trait to a smaller array.
+*Loop will terminate and return results when the length condition is met. 
+*Filter will have an or statement to handle integer inputs.
+*/
 function searchByMultipleTraits(people){
     let results = people;
     while(results.length > 1){
@@ -314,7 +316,7 @@ function searchByMultipleTraits(people){
         let userInputValue = promptFor("Please enter the value of the trait you would like to seach for.", chars);
         results = results.filter(
         function(person){
-            if(person[userInputTrait] === userInputValue || userInputValue === person[userInputTrait]){
+            if(person[userInputTrait] === userInputValue || parseInt(userInputValue) === person[userInputTrait]){ 
                 return true; 
             }
         }
@@ -330,8 +332,7 @@ function findPersonByMultipleTraits(people){
     return personTraitsArray;
 } 
 
-/* while(personTraits.length > 1){  //Loop to iterate until the search only yields 1 person
-    alert("Pick another trait to narrow your search: \ngender\ndob\nheight\nweight\neyeColor\noccupation", chars); //Narrow the search
-    results = findPersonByTrait(personTraits);
-    let personTraits = results;
-    displayPeople(results); */
+/*         let newResults = results
+            if(results.length > 1){
+            console.log(newResults);       
+            }     */ 
