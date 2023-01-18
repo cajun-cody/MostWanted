@@ -270,12 +270,7 @@ function searchBySingleOrMultipleTraits(people){
             break;
         case "2":
             let personTraits = findPersonByMultipleTraits(people);
-            displayPeople(results);
-            while(results.length > 1){  //Loop to iterate until the search only yields 1 person
-                alert("Pick another trait to narrow your search: \ngender\ndob\nheight\nweight\neyeColor\noccupation", chars); //Narrow the search
-                results = searchByMultipleTraits(results);
-                displayPeople(results);
-            }
+            alert(personTraits);
             break;
         default:
             searchBySingleOrMultipleTraits();
@@ -308,23 +303,32 @@ function findPersonByTrait(people){
     personTraitArray += `Person By Trait:--- \n${displayPeople(searchByTrait(people))}\n`;
     return personTraitArray;
 }
-
+//Function to search by multiple traits.
 function searchByMultipleTraits(people){
-
+    let results = people;
+    while(results.length > 1){
+        let userInputTrait = promptFor("Please enter what specific trait you would like to search by: \ngender\ndob\nheight\nweight\neyeColor\noccupation", chars);
+        let userInputValue = promptFor("Please enter the value of the trait you would like to seach for.", chars);
+        results = results.filter(
+        function(person){
+            if(person[userInputTrait] === userInputValue || userInputValue === person[userInputTrait]){
+               return true; 
+            }
+        }
+    )};
+    return results;
 }
-
-
-
-
-
-
-
-/**
+/* /*
  * Function to stringify person found by multiple traits.
  */
 function findPersonByMultipleTraits(people){
     let personTraitsArray =[];
     personTraitsArray += `Person By Multiple Traits:--- \n${displayPeople(searchByMultipleTraits(people))}\n`;
     return personTraitsArray;
-}
+} 
 
+/* while(personTraits.length > 1){  //Loop to iterate until the search only yields 1 person
+    alert("Pick another trait to narrow your search: \ngender\ndob\nheight\nweight\neyeColor\noccupation", chars); //Narrow the search
+    results = findPersonByTrait(personTraits);
+    let personTraits = results;
+    displayPeople(results); */
