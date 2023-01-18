@@ -269,6 +269,7 @@ function searchBySingleOrMultipleTraits(people){
             alert(personTrait);
             break;
         case "2":
+            alert("You will be asked to search multiple times to narrow your search to one person.");
             let personTraits = findPersonByMultipleTraits(people);
             alert(personTraits);
             break;
@@ -304,6 +305,8 @@ function findPersonByTrait(people){
     return personTraitArray;
 }
 //Function to search by multiple traits.
+//While loop will iterate by narrowing each searched by trait to a smaller array.
+//Loop will terminate and return results when the length condition is met. 
 function searchByMultipleTraits(people){
     let results = people;
     while(results.length > 1){
@@ -312,7 +315,7 @@ function searchByMultipleTraits(people){
         results = results.filter(
         function(person){
             if(person[userInputTrait] === userInputValue || userInputValue === person[userInputTrait]){
-               return true; 
+                return true; 
             }
         }
     )};
