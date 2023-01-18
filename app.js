@@ -321,7 +321,7 @@ function searchByMultipleTraits(people){
             }
         }
     )
-    let newResults = results;
+    let newResults = results;      //New variable is declared for the narrow list and displays instructions. 
     if(newResults.length > 1){
     alert(displayPeople(newResults));
     alert("Let's try and narrow down this search...\n Choose a different trait and value");
