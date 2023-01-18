@@ -320,7 +320,13 @@ function searchByMultipleTraits(people){
                 return true; 
             }
         }
-    )};
+    )
+    let newResults = results;
+    if(newResults.length > 1){
+    alert(displayPeople(newResults));
+    alert("Let's try and narrow down this search...\n Choose a different trait and value");
+    }
+    };
     return results;
 }
 /* /*
@@ -332,7 +338,3 @@ function findPersonByMultipleTraits(people){
     return personTraitsArray;
 } 
 
-/*         let newResults = results
-            if(results.length > 1){
-            console.log(newResults);       
-            }     */ 
